@@ -11,63 +11,32 @@ Write a UNIX command line interpreter
 
 The shell should: • Display a prompt and wait for the user to type a command. A command line always ends with a new line. • The prompt is displayed again each time a command has been executed. • The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features. • The command lines are made only of one word. No arguments will be passed to programs. • If an executable cannot be found, print an error message and display the prompt again. • Handle errors. • You have to handle the “end of file” condition (Ctrl+D)
 
-Handle command lines with arguments
+simple shell
 
-Usage:
-/bin/ls -l
+We created a basic version of the Unix shell from scratch. A program that takes commands from the keyboard and gives them to the operating system to perform. The shell can perform commands such as listing files in current working directory by typing ls, exit, among others. It works in both interactive and non-interactive mode.
 
-Handle the PATH
+The following are the allowed functions and system calls.
 
-Usage:
-PATH=/bin/ls:/usr/bin/ls: /*and so on*/
+access, chdir, close, closedir, execve, exit, _exit, fflush, fork,free, getcwd, getline, getpid, isatty, kill, malloc, open, opendir, perror, read, readdir, signal, stat, lstat, fstat, strtok, wait, waitpid, wait3, wait4, write
 
-Implement the exit built-in, that exits the shell
+File Descriptions
 
-Usage:
-exit(0);
+AUTHORS: Has the names of this project's contributors.
 
-Implement the env built-in, that prints the current environment
+execute: Contains the function that executes shell commands.
 
-Usage:
-$ env /* Command line entered by user */
-USER=julien
-LANGUAGE=en_US
-SESSION=ubuntu
-COMPIZ_CONFIG_PROFILE=ubuntu
-SHLVL=1
-HOME=/home/julien
-C_IS=Fun_:)
-DESKTOP_SESSION=ubuntu
-LOGNAME=julien
-TERM=xterm-256color
-PATH=/home/julien/bin:/home/julien/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-DISPLAY=:0
+_strings.c, _strings2.c, _strings3.c: Contains functions that are used to manipultate and get data about strings like finding string length and splitting a string.
 
-Contribute to a test suite for your shell. (This is a task shared by everyone in the class)
+built-in.c: Includes functions to perform built-in shell command operations like exit.
 
-Write your own getline function
+holberton.h: Holds all function prototypes and headers.
 
-getline function is usefull for getting the user input in command prompt.
+main.c: The shell's entry point i.e contains the main method.
 
-Usage:
-_getline(&buffer, &bufferSize, stdin);
-You are not allowed to use strtok
+man_1_simple_shell: A manual for the shell.
 
-strtok function is usefull fo cutting the character(s) we want in a line
+prompt.c: Prints the shell's title to indicate the shell is ready to receive input.
 
-Usage:
-_strtok(string, "character(s)");
-handle arguments for the built-in exit
+readline: Responsible for picking commands typed into the shell.
 
-exit function is usefull for exiting a program and printing an integer
-
-Usage:
-$ exit 98
-julien@ubuntu:~/shell$ echo $?
-98
-Handle Ctrl+C: your shell should not quit when the user inputs ^C
-
-Because we already use Ctrl+D to exit our custom shell
-
-Usage:
-signal(SIGINT, SIG_IGN); /* Ignore the Ctrl+c Input */
+handle_path.c: Contains functions used to handle cases when a command is entered into the shell instead of the path to the executable file. For example when a use types ls instead of \bin\ls;
