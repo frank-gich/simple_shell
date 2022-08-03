@@ -17,5 +17,5 @@ We created a basic version of the Unix shell from scratch. A program that takes 
 
 The following are the allowed functions and system calls.
 
-access, chdir, close, closedir, 'execve, exit, _exit, fflush, fork,free, getcwd, getline, getpid, isatty, kill, malloc, open, opendir, perror, read, readdir, signal, stat, lstat, fstat, strtok, wait, waitpid, wait3, wait4, write
+``access, chdir, close, closedir, 'execve, exit, _exit, fflush, fork,free, getcwd, getline, getpid, isatty, kill, malloc, open, opendir, perror, read, readdir, signal, stat, lstat, fstat, strtok, wait, waitpid, wait3, wait4, write,``
 
