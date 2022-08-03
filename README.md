@@ -19,24 +19,3 @@ The following are the allowed functions and system calls.
 
 access, chdir, close, closedir, execve, exit, _exit, fflush, fork,free, getcwd, getline, getpid, isatty, kill, malloc, open, opendir, perror, read, readdir, signal, stat, lstat, fstat, strtok, wait, waitpid, wait3, wait4, write
 
-File Descriptions
-
-AUTHORS: Has the names of this project's contributors.
-
-execute: Contains the function that executes shell commands.
-
-_strings.c, _strings2.c, _strings3.c: Contains functions that are used to manipultate and get data about strings like finding string length and splitting a string.
-
-built-in.c: Includes functions to perform built-in shell command operations like exit.
-
-holberton.h: Holds all function prototypes and headers.
-
-main.c: The shell's entry point i.e contains the main method.
-
-man_1_simple_shell: A manual for the shell.
-
-prompt.c: Prints the shell's title to indicate the shell is ready to receive input.
-
-readline: Responsible for picking commands typed into the shell.
-
-handle_path.c: Contains functions used to handle cases when a command is entered into the shell instead of the path to the executable file. For example when a use types ls instead of \bin\ls;
