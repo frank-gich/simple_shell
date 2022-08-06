@@ -77,4 +77,3 @@ int execute2(char **tokens, char *path, char *args)
 	wait(&status);
 	return (EXIT_SUCCESS);
 }
-
