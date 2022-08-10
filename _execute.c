@@ -6,7 +6,7 @@
  * @args: Program arguments
  * Return: 0 if success. otherwise 1
  */
-int _execute(char **tokens, char *args)
+int _execute(char **tokens, char **args)
 {
 	char *err1, *err2, *err3;
 	pid_t child_pid;
