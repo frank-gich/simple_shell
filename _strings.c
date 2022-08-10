@@ -1,112 +1,95 @@
-#include "main.h"
+#include "holberton.h"
 
 /**
- * _strlen - Returns length of a string
- * @s: Pointer to string
- * Return: Length of s
+ * _setenv - updates or adds an environment variable
+ * @var_name:variable name
+ * @var_value:variable value
+ * Return:0 - success,otherwise -1
  */
-int _strlen(char *s)
-{
-	int index;
-
-	index = 0;
-	while (s[index] != '\0')
-	{
-		index++;
-	}
-	return (index);
-}
-/**
- * _strcat - Concatenates two strings
- * @dest: Pointer to string to be conatenated upon
- * @src: Pointer to string to append to dest
- * Return: Pointer to dest
- */
-char *_strcat(char *dest, char *src)
-{
-	char *destAddress;
-	int destLen;
-
-	destAddress = dest;
-	destLen = _strlen(dest);
-	destAddress = destAddress + destLen;
-	while (*src != '\0')
-	{
-		*destAddress = *src;
-		src++;
-		destAddress++;
-	}
-	*destAddress = '\0';
-
-	return (dest);
-}
-
-/**
- * _check_white_space - checks for white space
- * @s: Pointer to string to check
- * Return: integer
- */
-unsigned int _check_white_space(char *s)
-{
-	int i, count = 0;
-
-	for (i = 0; s[i] != '\0'; i++)
-	{
-		if (s[i]  == ' ' || s[i] == '\t' || s[i] == '\n')
-			count++;
-	}
-	return (count);
-}
-
-/**
- * _strtotokens - splits a string into words
- * @str: Pointer to string
- * Return: Pointer to array of words
- */
-char **_strtotokens(char *str)
+int _setenv(char *var_name, char *var_value)
 {
 	int i = 0;
-	const char delimeter[] = " \t\n";
-	int space = _check_white_space(str);
-	char **tokens = malloc(sizeof(char *) * (space + 1));
-	char *token;
+	size_t name_len;
+	char *var_new;
 
-	if (!tokens)
+	name_len = _strlen(var_name);
+	i = 0;
+	/*updating an existing variable*/
+	while (environ[i])
 	{
-		free(tokens);
-		fprintf(stderr, "sh: allocation error\n");
-		exit(1);
-	}
-
-	token = strtok(str, delimeter);
-
-	while (token != NULL)
-	{
-		tokens[i] = token;
-		token = strtok(NULL, delimeter);
+		if (strncmp(environ[i], var_name, name_len) == 0)
+		{
+			var_new = var_build(var_name, var_value);
+			/*Not sure but wanted to clear its mem b4 writing*/
+			environ[i] = NULL;
+			environ[i] = _strdup(var_new);
+			free(environ[i]);
+			environ[i] = _strdup(var_new);
+			free(var_new);
+			return (0);
+		}
 		i++;
 	}
-	tokens[i] =  NULL;
+	/*adding a variable that never existed before*/
+	var_new = var_build(var_name, var_value);
+	free(environ[i]);
+	environ[i] = _strdup(var_new);
+	i++;
+	environ[i] = NULL;
+	var_new = NULL;
 
-	return (tokens);
+	return (0);
 }
-
-
-
 /**
- * _puts - prints a string, followed by a new line, to stdout
- * @str: string to print
+ * var_build - builds an environment variable from its name and valu
+ * @var_name:variable name
+ * @var_value:variable value
+ * Return:string containing full environment variable
  */
-
-void _puts(char *str)
+char *var_build(char *var_name, char *var_value)
 {
-	unsigned long i = 0;
+	char *new_var;
+	size_t var_len;
 
-	while (str[i] != '\0')
+	var_len = _strlen(var_name) + _strlen(var_value) + 2;
+	new_var = malloc(sizeof(char) * var_len);
+	if (new_var == NULL)
 	{
-		_putchar(str[i]);
+		perror("Error: Insufficient memory\n");
+		return (NULL);
+	}
+	memset(new_var, 0, var_len);
+	/*Data in the form: var_name=var_value*/
+	new_var = _strcat(new_var, var_name);
+	new_var = _strcat(new_var, "=");
+	new_var = _strcat(new_var, var_value);
+
+	return (new_var);
+}
+/**
+ * _unsetenv - removes an environment variable
+ * @var_name:variable name
+ * Return:0 if successful -1,otherwise
+ */
+int _unsetenv(char *var_name)
+{
+	int i = 0;
+	char **env_temp;
+	size_t name_len;
+
+	name_len = _strlen(var_name);
+	while (environ[i])
+	{
+		if (strncmp(environ[i], var_name, name_len) == 0)
+		{
+			env_temp = environ;
+			free(env_temp[0]);
+			do {
+				env_temp[0] = env_temp[1];
+				env_temp++;
+			} while (*env_temp);
+		}
 		i++;
 	}
-
-	_putchar('\n');
+	return (0);
 }
